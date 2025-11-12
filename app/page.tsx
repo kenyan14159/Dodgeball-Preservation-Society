@@ -98,7 +98,7 @@ export default function Home() {
 
   // 画像を読み込んでランダムに選択（useCallbackでメモ化）
   const shuffleImages = useCallback(() => {
-    if (allImages.length === 0 || typeof window === "undefined") return;
+    if (allImages.length === 0 || typeof window === "undefined" || !mounted) return;
 
     // Tailwindの標準ブレークポイントに基づいて枚数を決定
     const getImageCount = () => {
@@ -124,7 +124,7 @@ export default function Home() {
     setImageCount(count);
     const shuffled = [...allImages].sort(() => Math.random() - 0.5);
     setHeroImages(shuffled.slice(0, count));
-  }, [allImages]);
+  }, [allImages, mounted]);
 
   // マウント状態の管理（ハイドレーションエラー回避）
   useEffect(() => {
@@ -198,6 +198,8 @@ export default function Home() {
 
   // 画面サイズ変更時に画像枚数を再計算（デバウンス付き）
   useEffect(() => {
+    if (!mounted) return;
+    
     const handleResize = () => {
       if (resizeTimeoutRef.current) {
         clearTimeout(resizeTimeoutRef.current);
@@ -217,11 +219,11 @@ export default function Home() {
         clearTimeout(resizeTimeoutRef.current);
       }
     };
-  }, [shuffleImages]);
+  }, [shuffleImages, mounted]);
 
   // 定期的に画像をシャッフル（5秒ごと）
   useEffect(() => {
-    if (allImages.length === 0) return;
+    if (allImages.length === 0 || !mounted) return;
 
     shuffleIntervalRef.current = setInterval(() => {
       shuffleImages();
@@ -232,9 +234,11 @@ export default function Home() {
         clearInterval(shuffleIntervalRef.current);
       }
     };
-  }, [shuffleImages]);
+  }, [shuffleImages, mounted, allImages.length]);
 
   useEffect(() => {
+    if (!mounted) return;
+    
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -259,10 +263,12 @@ export default function Home() {
       elements.forEach((el) => observerRef.current?.unobserve(el));
       observerRef.current?.disconnect();
     };
-  }, []);
+  }, [mounted]);
 
   // ESCキーでモーダルを閉じる、矢印キーで前後のメンバーに移動
   useEffect(() => {
+    if (!mounted) return;
+    
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedMember) return;
 
@@ -281,7 +287,7 @@ export default function Home() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedMember]);
+  }, [selectedMember, mounted]);
 
   // スクロール検知
   useEffect(() => {
