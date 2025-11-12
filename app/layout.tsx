@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { IMAGE_URLS } from "@/lib/constants";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,10 +16,37 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ドッジボール愛護団体",
   description: "ドッジボール愛護団体のメンバー紹介ページ",
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
   icons: {
-    icon: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_love.jpg",
-    shortcut: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_love.jpg",
-    apple: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_love.jpg",
+    icon: IMAGE_URLS.LOGO,
+    shortcut: IMAGE_URLS.LOGO,
+    apple: IMAGE_URLS.LOGO,
+  },
+  openGraph: {
+    title: "ドッジボール愛護団体",
+    description: "ドッジボール愛護団体のメンバー紹介ページ",
+    images: [
+      {
+        url: IMAGE_URLS.LOGO,
+        width: 1200,
+        height: 630,
+        alt: "ドッジボール愛護団体",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ドッジボール愛護団体",
+    description: "ドッジボール愛護団体のメンバー紹介ページ",
+    images: [IMAGE_URLS.LOGO],
   },
 };
 
