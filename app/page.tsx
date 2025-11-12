@@ -12,6 +12,7 @@ interface Member {
   nameRomaji?: string;
   profile: string;
   imageUrl?: string;
+  instagramUrl?: string;
 }
 
 const members: Member[] = [
@@ -21,6 +22,7 @@ const members: Member[] = [
     nameRomaji: "Kanta Oomori",
     profile: "ドッジボール愛護団体の可愛いキャラ代表。料理、勉強、スポーツと、あらゆる分野で才能を発揮するハイスペック男子。その完璧ぶりで数々の女性を虜にしてきた罪深き男である。現在は我々の胃袋を支える料理担当として活躍中。可愛い顔して腕前は一流、まさに「可愛いは正義」を体現する貴重な存在だ。",
     imageUrl: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_member9.jpg",
+    instagramUrl: "https://www.instagram.com/kanntamorimori/",
   },
   {
     id: "4",
@@ -28,6 +30,7 @@ const members: Member[] = [
     nameRomaji: "Takuma Sato",
     profile: "ドッジボール愛護団体随一のシスコン。大沢屈指の大金持ちとして、我々に何度も豪華な開会式を提供してくれる包容力の持ち主。自宅にはBBQ場、大型バスを完備という規格外ぶり。豊橋の大学では特技のギターで女性を落としまくった実績を持つが、本人曰く「お姉ちゃん以外興味ない」とのこと。その一途さ、むしろ清々しい。",
     imageUrl: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_member2-scaled.jpeg",
+    instagramUrl: "https://www.instagram.com/takuma_s.0316/",
   },
   {
     id: "5",
@@ -35,6 +38,7 @@ const members: Member[] = [
     nameRomaji: "Hiromu Shimizu",
     profile: "大沢野の異端児。小学・中学時代から学校全体のムードメーカーとして君臨。高校卒業後は地元の営業マンとしてスキルを磨き、今年はなんとオーストラリアへ武者修行に出発。その圧倒的行動力と営業スキルは、我々にとっても必須レベル。彼がいれば場が盛り上がる、そんな男だ。",
     imageUrl: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_member3.jpeg",
+    instagramUrl: "https://www.instagram.com/___hiromuuu/",
   },
   {
     id: "3",
@@ -42,6 +46,7 @@ const members: Member[] = [
     nameRomaji: "Atsushi Nakagawa",
     profile: "大沢野随一のゲーマー。一時期はドッジボール愛護団体から離脱するも、涙の復帰会見で感動の復活を果たした男。最近では大沢野最強の男・守田に腕相撲で勝つため、大好きなゲームを封印して筋トレに没頭中。2026年1月2日、世紀の腕相撲対決を見逃すな!果たして下剋上は成るのか!?",
     imageUrl: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_member8.jpeg",
+    instagramUrl: "https://www.instagram.com/n.atushirx8/",
   },
   {
     id: "10",
@@ -49,6 +54,7 @@ const members: Member[] = [
     nameRomaji: "Sora Nakazawa",
     profile: "大沢野のゴキブリ。学生時代、ゴキブリのような縦横無尽の動きでサッカー部の仲間をサポートし続けた献身的プレイヤー。中学時代には全国大会出場に貢献するなど、その機動力は折り紙付き。この会では「ウケ狙い大会」を考案し、数々の伝説的ネタを生み出してきた張本人。ただし、作成者だからといってネタが面白いとは誰も言っていない…。今年から転職を決意。新しい環境でも、あの「ゴキブリ並みのスピード感」で駆け抜けてくれるはずだ。",
     imageUrl: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_member5.jpeg",
+    instagramUrl: "https://www.instagram.com/soraoooo922/",
   },
   {
     id: "9",
@@ -56,6 +62,7 @@ const members: Member[] = [
     nameRomaji: "Tetta Himi",
     profile: "煽りの天才。誰よりも負けず嫌いで、ボールを持ったら力尽きるまで追いかけ回してくる異常体力の持ち主。数々の問題を起こしてきたが、お得意の忍耐力で試練を乗り越え、大学2年で箱根駅伝6区出場という快挙を達成。煽りスキルと忍耐力、この二刀流が彼の武器だ。",
     imageUrl: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_member7.jpeg",
+    instagramUrl: "https://www.instagram.com/tetta_himi/",
   },
   {
     id: "8",
@@ -63,6 +70,7 @@ const members: Member[] = [
     nameRomaji: "Shotaro Futamura",
     profile: "富山を裏切りし男。小学・中学時代はこの会のモブキャラとして裏方を支えていた縁の下の力持ち。高校・大学と県外に進学し、富山の不便さを痛感。そして大学卒業後は東京で就職を決意。「みんなと離れて寂しいです…」という本音がにじむ、実は愛郷心溢れる男である。",
     imageUrl: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_member1.jpeg",
+    instagramUrl: "https://www.instagram.com/shotaro.f_04/",
   },
   {
     id: "7",
@@ -70,6 +78,7 @@ const members: Member[] = [
     nameRomaji: "Norito Murakami",
     profile: "野球バカの権化。彼の人生=肉、女の子、野球。この三大要素で構成されている。様々なものを犠牲にしながら野球一筋に生きてきた男。超面倒くさがり屋のため、彼の家の前に集合させられてドッジボールをしたのは今となってはいい思い出。ちなみに彼の帰宅時間は1秒である。",
     imageUrl: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_member4.jpeg",
+    instagramUrl: "https://www.instagram.com/mn00813/",
   },
   {
     id: "6",
@@ -77,6 +86,7 @@ const members: Member[] = [
     nameRomaji: "Hiroyasu Morita",
     profile: "黄色いカバンの伝説。大沢最強の男。小学生時代は喧嘩番長として恐れられていたが、中学生で突如キャラ変してまさかのおとなしキャラに。しかし最強の肩書きは健在で、誰も近寄れない絶対的存在感を放つ。黄色いカバンを持って走ってくる姿は、もはや恐怖。その一言に尽きる。",
     imageUrl: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_member6.jpeg",
+    instagramUrl: "https://www.instagram.com/m0r1ta06/",
   },
 ];
 
@@ -551,10 +561,37 @@ export default function Home() {
               {/* メンバー情報 */}
               <div className="p-6">
                 <div className="mb-3">
-                  <h3 className="text-2xl font-bold text-card-foreground relative inline-block">
-                    {member.name}
-                    <span className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-primary via-accent to-primary" />
-                  </h3>
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-2xl font-bold text-card-foreground relative inline-block">
+                      {member.name}
+                      <span className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-primary via-accent to-primary" />
+                    </h3>
+                    {member.instagramUrl && (
+                      <a
+                        href={member.instagramUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex-shrink-0 rounded-full p-2 transition-all hover:scale-110"
+                        aria-label={`${member.name}のInstagram`}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 24 24"
+                        >
+                          <defs>
+                            <linearGradient id="instagram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#833AB4" />
+                              <stop offset="50%" stopColor="#E1306C" />
+                              <stop offset="100%" stopColor="#FCAF45" />
+                            </linearGradient>
+                          </defs>
+                          <path fill="url(#instagram-gradient)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                      </a>
+                    )}
+                  </div>
                   {member.nameRomaji && (
                     <div className="mt-2">
                       <span className="text-sm text-muted-foreground">
@@ -710,10 +747,36 @@ export default function Home() {
             {/* メンバー情報 */}
             <div className="p-8">
               <div className="mb-4">
-                <h3 className="text-3xl font-bold text-card-foreground relative inline-block">
-                  {selectedMember.name}
-                  <span className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-primary via-accent to-primary" />
-                </h3>
+                <div className="flex items-center justify-between gap-4 mb-3">
+                  <h3 className="text-3xl font-bold text-card-foreground relative inline-block">
+                    {selectedMember.name}
+                    <span className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-primary via-accent to-primary" />
+                  </h3>
+                  {selectedMember.instagramUrl && (
+                    <a
+                      href={selectedMember.instagramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-shrink-0 rounded-full p-3 transition-all hover:scale-110"
+                      aria-label={`${selectedMember.name}のInstagram`}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        viewBox="0 0 24 24"
+                      >
+                        <defs>
+                          <linearGradient id="instagram-gradient-modal" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#833AB4" />
+                            <stop offset="50%" stopColor="#E1306C" />
+                            <stop offset="100%" stopColor="#FCAF45" />
+                          </linearGradient>
+                        </defs>
+                        <path fill="url(#instagram-gradient-modal)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                      </svg>
+                    </a>
+                  )}
+                </div>
                 {selectedMember.nameRomaji && (
                   <div className="mt-3">
                     <span className="text-base font-medium text-muted-foreground">
