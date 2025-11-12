@@ -441,7 +441,7 @@ export default function Home() {
         </div>
 
         {/* メンバーグリッド */}
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {members.map((member, index) => (
             <div
               key={member.id}
@@ -470,7 +470,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
               {/* メンバー画像 */}
-              <div className="relative h-96 w-full overflow-hidden bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-900">
+              <div className="relative h-64 sm:h-80 md:h-96 w-full overflow-hidden bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-900">
                 {member.imageUrl ? (
                   <Image
                     src={member.imageUrl}
@@ -493,10 +493,10 @@ export default function Home() {
               </div>
 
               {/* メンバー情報 */}
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="mb-3">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-2xl font-bold text-card-foreground relative inline-block">
+                    <h3 className="text-xl sm:text-2xl font-bold text-card-foreground relative inline-block">
                       {member.name}
                       <span className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-primary via-accent to-primary" />
                     </h3>
@@ -560,7 +560,7 @@ export default function Home() {
                     </div>
                   )}
                 </div>
-                <p id={`member-description-${member.id}`} className="leading-relaxed text-muted-foreground">{member.profile}</p>
+                <p id={`member-description-${member.id}`} className="text-sm sm:text-base leading-relaxed text-muted-foreground">{member.profile}</p>
               </div>
 
               {/* ホバー時のアクセント */}
