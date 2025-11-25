@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剣道部 | 一撃必殺の美学</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Zen+Kaku+Gothic+New:wght@300;400;700;900&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink-black: #0a0a0a;
+            --paper-white: #f5f0e8;
+            --blood-red: #8b0000;
+            --gold: #c9a227;
+            --ash-gray: #2a2a2a;
+            --washi: #e8e0d0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            background: var(--ink-black);
+            color: var(--paper-white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.1s ease, background 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            width: 8px;
+            height: 8px;
+            background: var(--blood-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.3s ease;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background: rgba(201, 162, 39, 0.3);
+        }
+
+        /* Ink Splash Loading */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--ink-black);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .loader-kanji {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 8rem;
+            font-weight: 900;
+            color: var(--paper-white);
+            opacity: 0;
+            animation: brushStroke 0.8s ease forwards;
+            text-shadow: 0 0 60px rgba(139, 0, 0, 0.5);
+        }
+
+        .loader-kanji:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .loader.fade-out {
+            animation: loaderFade 1s ease forwards;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes brushStroke {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scaleX(0);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scaleX(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes loaderFade {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 0.3em;
+            color: var(--paper-white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--paper-white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blood-red);
+            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(201, 162, 39, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, var(--ink-black) 0%, var(--ash-gray) 100%);
+        }
+
+        /* Ink drip animation */
+        .ink-drips {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .ink-drip {
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--ink-black), var(--blood-red), transparent);
+            animation: drip 4s ease-in infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes drip {
+            0% {
+                height: 0;
+                top: 0;
+                opacity: 0.6;
+            }
+            50% {
+                height: 200px;
+                opacity: 0.4;
+            }
+            100% {
+                height: 0;
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.1em;
+            position: relative;
+            opacity: 0;
+            animation: heroReveal 1.2s ease forwards;
+            animation-delay: 2s;
+        }
+
+        .hero-title span {
+            display: inline-block;
+            position: relative;
+        }
+
+        .hero-title span::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -20%;
+            width: 140%;
+            height: 8px;
+            background: var(--blood-red);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: slashLine 0.6s ease forwards;
+            animation-delay: 2.8s;
+        }
+
+        @keyframes heroReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(100px);
+                filter: blur(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes slashLine {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .hero-subtitle {
+            font-family: 'Zen Antique', serif;
+            font-size: clamp(1rem, 3vw, 1.8rem);
+            letter-spacing: 0.5em;
+            margin-top: 2rem;
+            color: var(--gold);
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 3s;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            writing-mode: vertical-rl;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scaleY(0.5);
+                opacity: 0.5;
+            }
+        }
+
+        /* Section Styling */
+        section {
+            padding: 8rem 4rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 4rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--blood-red);
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            background: var(--paper-white);
+            color: var(--ink-black);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .philosophy::before {
+            content: '道';
+            position: absolute;
+            right: -10%;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Noto Serif JP', serif;
+            font-size: 50vw;
+            opacity: 0.03;
+            font-weight: 900;
+        }
+
+        .philosophy-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .philosophy-text h2 {
+            color: var(--ink-black);
+        }
+
+        .philosophy-text h2::after {
+            background: var(--blood-red);
+        }
+
+        .philosophy-text p {
+            font-size: 1.1rem;
+            line-height: 2.2;
+            margin-bottom: 2rem;
+            font-family: 'Zen Antique', serif;
+        }
+
+        .philosophy-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle-kanji {
+            width: 300px;
+            height: 300px;
+            border: 2px solid var(--ink-black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .circle-kanji::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--blood-red);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.5;
+            }
+        }
+
+        .inner-kanji {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            animation: counterRotate 20s linear infinite;
+        }
+
+        @keyframes counterRotate {
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        /* Training Section */
+        .training {
+            background: var(--ink-black);
+            position: relative;
+        }
+
+        .training::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, var(--paper-white), transparent);
+            pointer-events: none;
+        }
+
+        .training-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .training-card {
+            background: linear-gradient(145deg, var(--ash-gray), var(--ink-black));
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .training-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--blood-red), var(--gold));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .training-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .training-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+        }
+
+        .training-card h3 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .training-card .time {
+            font-size: 0.85rem;
+            color: var(--blood-red);
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+        }
+
+        .training-card p {
+            line-height: 1.8;
+            opacity: 0.8;
+        }
+
+        .training-card .number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            opacity: 0.1;
+            color: var(--gold);
+        }
+
+        /* Members Section */
+        .members {
+            background: var(--washi);
+            color: var(--ink-black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .members::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(0, 0, 0, 0.02) 50px,
+                    rgba(0, 0, 0, 0.02) 51px
+                );
+            pointer-events: none;
+        }
+
+        .members .section-title {
+            color: var(--ink-black);
+        }
+
+        .member-showcase {
+            display: flex;
+            gap: 4rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scroll-snap-type: x mandatory;
+        }
+
+        .member-card {
+            min-width: 350px;
+            scroll-snap-align: start;
+            background: var(--paper-white);
+            position: relative;
+            transition: transform 0.4s ease;
+        }
+
+        .member-card:hover {
+            transform: scale(1.02);
+        }
+
+        .member-image {
+            height: 400px;
+            background: linear-gradient(135deg, var(--ash-gray), var(--ink-black));
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-image::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 30%, var(--ink-black) 100%);
+        }
+
+        .member-silhouette {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 8rem;
+            color: var(--paper-white);
+            opacity: 0.1;
+        }
+
+        .member-info {
+            padding: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: none;
+        }
+
+        .member-info h3 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-info .role {
+            color: var(--blood-red);
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .member-info .quote {
+            font-family: 'Zen Antique', serif;
+            font-style: italic;
+            line-height: 1.8;
+            opacity: 0.8;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--blood-red);
+            color: var(--paper-white);
+            padding: 6rem 4rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item {
+            position: relative;
+        }
+
+        .stat-number {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            margin-top: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--ink-black);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '入';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Noto Serif JP', serif;
+            font-size: 60vw;
+            opacity: 0.02;
+            font-weight: 900;
+        }
+
+        .contact-content {
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .contact h2 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            margin-bottom: 2rem;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.5rem 4rem;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.4s ease;
+            cursor: pointer;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gold);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            color: var(--ink-black);
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        /* Interactive Form Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--paper-white);
+            color: var(--ink-black);
+            padding: 4rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.5s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--ink-black);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--blood-red);
+        }
+
+        .modal h3 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            color: var(--ash-gray);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            background: transparent;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--blood-red);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--ink-black);
+            color: var(--paper-white);
+            border: none;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--blood-red);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--ink-black);
+            padding: 3rem 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.3em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--paper-white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .philosophy-content {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .training-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 2rem;
+            }
+
+            nav {
+                padding: 1rem 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .training-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cursor, .cursor-follower {
+                display: none;
+            }
+
+            body {
+                cursor: auto;
+            }
+        }
+
+        /* Ink Splash Effect Container */
+        .ink-splash {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        .splash {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--blood-red) 0%, transparent 70%);
+            animation: splash 0.6s ease-out forwards;
+        }
+
+        @keyframes splash {
+            0% {
+                transform: scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Ink Splash Container -->
+    <div class="ink-splash"></div>
+
+    <!-- Loader -->
+    <div class="loader">
+        <span class="loader-kanji">剣</span>
+        <span class="loader-kanji">道</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">剣道部</div>
+        <ul class="nav-links">
+            <li><a href="#philosophy" class="hover-target">心得</a></li>
+            <li><a href="#training" class="hover-target">稽古</a></li>
+            <li><a href="#members" class="hover-target">部員</a></li>
+            <li><a href="#contact" class="hover-target">入部</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="ink-drips">
+            <div class="ink-drip" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="ink-drip" style="left: 25%; animation-delay: 1s;"></div>
+            <div class="ink-drip" style="left: 45%; animation-delay: 2s;"></div>
+            <div class="ink-drip" style="left: 65%; animation-delay: 0.5s;"></div>
+            <div class="ink-drip" style="left: 85%; animation-delay: 1.5s;"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title"><span>剣道</span></h1>
+            <p class="hero-subtitle">一撃必殺の美学を求めて</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy" id="philosophy">
+        <div class="philosophy-content">
+            <div class="philosophy-text reveal">
+                <h2 class="section-title">心得</h2>
+                <p>
+                    剣道とは、単なる武術ではない。<br>
+                    それは己と向き合い、精神を鍛え、<br>
+                    人としての道を極める修行である。
+                </p>
+                <p>
+                    一瞬の隙を見逃さぬ集中力。<br>
+                    相手を敬い、礼を尽くす心。<br>
+                    勝敗を超えた、真の強さを求めて。
+                </p>
+                <p>
+                    私たちと共に、剣の道を歩もう。
+                </p>
+            </div>
+            <div class="philosophy-visual reveal">
+                <div class="circle-kanji">
+                    <span class="inner-kanji">心</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Section -->
+    <section class="training" id="training">
+        <h2 class="section-title reveal">稽古</h2>
+        <div class="training-grid">
+            <div class="training-card reveal hover-target">
+                <h3>朝稽古</h3>
+                <div class="time">AM 6:00 - 7:30</div>
+                <p>静寂の中で行う朝稽古。心身を清め、一日の始まりに集中力を高める。素振りと基本動作を徹底的に反復。</p>
+                <span class="number">壱</span>
+            </div>
+            <div class="training-card reveal hover-target">
+                <h3>午後稽古</h3>
+                <div class="time">PM 4:00 - 6:30</div>
+                <p>本格的な打ち込み稽古。掛かり稽古、地稽古を中心に、実戦的な技術を磨く。先輩後輩の垣根を越えた真剣勝負。</p>
+                <span class="number">弐</span>
+            </div>
+            <div class="training-card reveal hover-target">
+                <h3>特別稽古</h3>
+                <div class="time">土曜日 PM 1:00 - 5:00</div>
+                <p>試合形式の稽古と形稽古。外部指導者を招いた特別講習。他大学との合同稽古も定期的に開催。</p>
+                <span class="number">参</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Members Section -->
+    <section class="members" id="members">
+        <h2 class="section-title reveal">部員紹介</h2>
+        <div class="member-showcase">
+            <div class="member-card reveal hover-target">
+                <div class="member-image">
+                    <span class="member-silhouette">将</span>
+                </div>
+                <div class="member-info">
+                    <h3>山田 将太</h3>
+                    <div class="role">主将 / 四段</div>
+                    <p class="quote">「剣道は人生そのもの。一本一本に魂を込めて」</p>
+                </div>
+            </div>
+            <div class="member-card reveal hover-target">
+                <div class="member-image">
+                    <span class="member-silhouette">副</span>
+                </div>
+                <div class="member-info">
+                    <h3>佐藤 美咲</h3>
+                    <div class="role">副将 / 三段</div>
+                    <p class="quote">「女子だからこそ、技の美しさを追求したい」</p>
+                </div>
+            </div>
+            <div class="member-card reveal hover-target">
+                <div class="member-image">
+                    <span class="member-silhouette">新</span>
+                </div>
+                <div class="member-info">
+                    <h3>田中 翔</h3>
+                    <div class="role">新入部員 / 初段</div>
+                    <p class="quote">「大学から始めても、ここまで成長できる」</p>
+                </div>
+            </div>
+            <div class="member-card reveal hover-target">
+                <div class="member-image">
+                    <span class="member-silhouette">監</span>
+                </div>
+                <div class="member-info">
+                    <h3>鈴木 剛</h3>
+                    <div class="role">監督 / 七段</div>
+                    <p class="quote">「剣道を通じて、社会に貢献できる人材を育てる」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="45">0</span>
+                <span class="stat-label">部員数</span>
+            </div>
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="12">0</span>
+                <span class="stat-label">全国大会出場</span>
+            </div>
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="3">0</span>
+                <span class="stat-label">優勝回数</span>
+            </div>
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="50">0</span>
+                <span class="stat-label">創部年数</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-content reveal">
+            <h2>共に、道を極めよう</h2>
+            <p>
+                経験者も、初心者も歓迎。<br>
+                大切なのは、剣道を愛する心と向上心。<br>
+                まずは見学から、気軽にお越しください。
+            </p>
+            <button class="cta-button hover-target" id="openModal">入部について相談する</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">剣道部</div>
+        <div class="footer-links">
+            <a href="#" class="hover-target">Instagram</a>
+            <a href="#" class="hover-target">Twitter</a>
+            <a href="#" class="hover-target">お問い合わせ</a>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <h3>入部相談フォーム</h3>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label>お名前</label>
+                    <input type="text" required placeholder="山田 太郎">
+                </div>
+                <div class="form-group">
+                    <label>学部・学年</label>
+                    <input type="text" required placeholder="経済学部 1年">
+                </div>
+                <div class="form-group">
+                    <label>メールアドレス</label>
+                    <input type="email" required placeholder="example@university.ac.jp">
+                </div>
+                <div class="form-group">
+                    <label>剣道経験</label>
+                    <input type="text" placeholder="3年 / 初心者 など">
+                </div>
+                <div class="form-group">
+                    <label>メッセージ</label>
+                    <textarea rows="4" placeholder="質問や見学希望日など"></textarea>
+                </div>
+                <button type="submit" class="submit-btn hover-target">送信する</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('fade-out');
+            }, 500);
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        const hoverTargets = document.querySelectorAll('.hover-target');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            target.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+
+        // Ink Splash Effect on Click
+        const inkSplash = document.querySelector('.ink-splash');
+        document.addEventListener('click', (e) => {
+            const splash = document.createElement('div');
+            splash.classList.add('splash');
+            splash.style.left = e.clientX - 25 + 'px';
+            splash.style.top = e.clientY - 25 + 'px';
+            splash.style.width = '50px';
+            splash.style.height = '50px';
+            inkSplash.appendChild(splash);
+            
+            setTimeout(() => {
+                splash.remove();
+            }, 600);
+        });
+
+        // Scroll Reveal
+        const reveals = document.querySelectorAll('.reveal');
+        
+        function revealOnScroll() {
+            reveals.forEach(reveal => {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveal.getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.stat-number');
+        let countersAnimated = false;
+
+        function animateCounters() {
+            if (countersAnimated) return;
+            
+            const statsSection = document.querySelector('.stats');
+            const statsSectionTop = statsSection.getBoundingClientRect().top;
+            
+            if (statsSectionTop < window.innerHeight - 100) {
+                countersAnimated = true;
+                
+                counters.forEach(counter => {
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000;
+                    const increment = target / (duration / 16);
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.textContent = Math.ceil(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+                    
+                    updateCounter();
+                });
+            }
+        }
+
+        window.addEventListener('scroll', animateCounters);
+
+        // Modal
+        const modal = document.getElementById('modal');
+        const openModalBtn = document.getElementById('openModal');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Form Submission
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Create success animation
+            const btn = document.querySelector('.submit-btn');
+            btn.textContent = '送信完了！';
+            btn.style.background = '#2a5a2a';
+            
+            setTimeout(() => {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                btn.textContent = '送信する';
+                btn.style.background = '';
+                e.target.reset();
+            }, 2000);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                hero.style.opacity = 1 - scrolled / 700;
+            }
+        });
+    </script>
+</body>
+</html>
