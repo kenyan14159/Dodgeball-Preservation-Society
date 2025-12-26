@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dozzi.pages.dev"),
   title: "ドッジボール愛護団体",
   description: "ドッジボール愛護団体のメンバー紹介ページ",
   robots: {
@@ -25,9 +26,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: IMAGE_URLS.LOGO,
-    shortcut: IMAGE_URLS.LOGO,
-    apple: IMAGE_URLS.LOGO,
+    icon: "/dozzi.png",
+    shortcut: "/dozzi.png",
+    apple: "/apple-icon.png",
   },
   openGraph: {
     title: "ドッジボール愛護団体",

@@ -43,6 +43,6 @@ export const PROGRESS = {
 
 // 画像URL関連の定数
 export const IMAGE_URLS = {
-  LOGO: "https://wprs.my-hobby.space/wp-content/uploads/2025/11/dozzi_love.jpg",
+  LOGO: "/dozzi.png",
 } as const;
 
